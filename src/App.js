@@ -1,35 +1,40 @@
-import React, {useState} from "react";
-import AddUser from './component/Users/AddUser';
-import UserList from './component/Users/UserList';
-import ErrorModel from './component/UI/ErrorModel';
+import React, { useState } from "react";
+import AddUser from "./component/Users/AddUser";
+import UserList from "./component/Users/UserList";
+import ErrorModel from "./component/UI/ErrorModel";
 
 const App = () => {
   const [userList, setUserList] = useState([]);
   const [errors, setError] = useState();
-  const addUserDataHandler = (userData)=>{
-        setUserList((prevUserList)=>{
-          return [...prevUserList,userData];
-        });
+  const addUserDataHandler = (userData) => {
+    setUserList((prevUserList) => {
+      return [...prevUserList, userData];
+    });
   };
 
-  const addErrorHandler  = (error) => {
+  const addErrorHandler = (error) => {
     // console.log(error);
-     setError({
+    setError({
       title: error.title,
-      message: error.message
-     });
+      message: error.message,
+    });
   };
-  const clickErrorHandler = ()=>{
+  const clickErrorHandler = () => {
     setError(null);
   };
 
-
   return (
-    <div className="App">
-      {errors && <ErrorModel title={errors.title} message={errors.message} onConfirm={clickErrorHandler}/> }
-      <AddUser onAddUser={addUserDataHandler} onAddError={addErrorHandler}/>
-      <UserList users={userList}/>
-    </div>
+    <React.Fragment>
+      {errors && (
+        <ErrorModel
+          title={errors.title}
+          message={errors.message}
+          onConfirm={clickErrorHandler}
+        />
+      )}
+      <AddUser onAddUser={addUserDataHandler} onAddError={addErrorHandler} />
+      <UserList users={userList} />
+      </React.Fragment>
   );
 };
 
