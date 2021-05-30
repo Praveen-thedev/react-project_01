@@ -43,20 +43,31 @@ const AddUser = (props) => {
       userInput.enteredFirstName.trim().length === 0 ||
       userInput.enteredCity.trim().length === 0
     ) {
-      return;
+      const errorBox = {
+        title: "invalid input",
+        message: "please fill form correctly (non-empty values)",
+      };
+
+      return props.onAddError(errorBox);
     }
-    if (+userInput.enteredAge < 0) {
-      return;
+    if (+userInput.enteredAge < 1) {
+      const errorBox = {
+        title: "Invalid age",
+        message: "please Enter a valid age( > 0)",
+      };
+
+      return props.onAddError(errorBox);
     }
     const userData = {
+      id: Math.random().toString(),
       fName: userInput.enteredFirstName,
-      lName: +userInput.enteredLastName,
-      age: userInput.enteredAge,
+      lName: userInput.enteredLastName,
+      age: +userInput.enteredAge,
       city: userInput.enteredCity,
-      contact: userInput.enteredContact,
+      contact: +userInput.enteredContact,
     };
     // console.log(userInput);
-    props.addUserData(userData);
+    props.onAddUser(userData);
 
     setUserInput(() => {
       return {
